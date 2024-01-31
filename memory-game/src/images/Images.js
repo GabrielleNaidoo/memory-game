@@ -55,8 +55,8 @@ import spadesJack from "../images/card-images/spades/jack.jpg";
 import spadesQueen from "../images/card-images/spades/queen.jpg";
 import spadesKing from "../images/card-images/spades/king.jpg";
 
-import jokerBlack from "../images/card-images/jokers/black.jpg";
-import jokerRed from "../images/card-images/jokers/red.jpg";
+import jokerBlack from "../images/card-images/jokers/joker-1.jpg";
+import jokerRed from "../images/card-images/jokers/joker-2.jpg";
 
 const Images = {
   // clubs

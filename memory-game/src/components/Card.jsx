@@ -1,47 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import CardContext from "../../store/card-context";
 import cardBack from "../images/card-images/card-back.png";
 
 function Card(props) {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const CardCtx = useContext(CardContext);
   const [timerCompleted, setTimerCompleted] = useState(false);
-  const [cardCount, setCardCount] = useState(props.cardCount);
-
-  function clickHandler() {
-    if (timerCompleted && cardCount < 2) {
-      setIsFlipped((prev) => !prev);
-      setCardCount((prev) => prev + 1);
-    }
-  }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setIsFlipped(true);
+      props.individualCardData.flipped = true;
       setTimerCompleted(true);
     }, 10000);
 
     // Clear timeout if the component unmounts or if the card is flipped manually
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [props.individualCardData]);
 
   return (
     <div className="card_container">
-      {!isFlipped && (
+      {!props.individualCardData.flipped && (
         <div className="card_front">
           <img
             className="card_image"
             src={props.individualCardData.image}
             alt={`${props.individualCardData.value} of ${props.individualCardData.suit}`}
-            onClick={clickHandler}
           />
         </div>
       )}
-      {isFlipped && (
+      {props.individualCardData.flipped && (
         <div className="card_back">
           <img
             className="card_image"
             src={cardBack}
             alt={"Back of card"}
-            onClick={clickHandler}
+            onClick={props.clickHandler}
           />
         </div>
       )}

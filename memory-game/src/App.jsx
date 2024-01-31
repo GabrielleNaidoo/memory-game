@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
-import cardData from "./data.js";
+import CardContext from "../store/card-context.jsx";
 import PlayerModal from "./components/PlayerModal";
 import Card from "./components/Card";
 import "./styles/App.css";
 
 function App() {
   const navigate = useNavigate();
-  const [cards, setCards] = useState(cardData);
-  const [cardCount, setCardCount] = useState(0);
-  const [currentSet, setCurrentSet] = useState([]);
+  const CardCtx = useContext(CardContext);
+  const [cards, setCards] = useState(CardCtx.cardData);
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -33,9 +32,38 @@ function App() {
     setCards(shuffledCards);
   }
 
+  function handleClick(id) {
+    if (CardCtx.currentCount < 2) {
+      CardCtx.cardClickHandler(id);
+      const currentCard = cards.filter((card) => card.id === id)[0];
+      currentCard.flipped = false;
+    }
+  }
+
+  useEffect(() => {
+    if (
+      CardCtx.currentSet.length === 2 &&
+      CardCtx.currentSet[0].color === CardCtx.currentSet[1].color &&
+      CardCtx.currentSet[0].value === CardCtx.currentSet[1].value
+    ) {
+      setCards((prev) =>
+        prev.filter(
+          (card) =>
+            card.id !== CardCtx.currentSet[0].id &&
+            card.id !== CardCtx.currentSet[1].id
+        )
+      );
+    }
+    console.log(CardCtx.currentSet);
+  }, [CardCtx.currentSet, cards]);
+
   const cardSet = cards.map((card) => {
     return (
-      <Card key={card.id} individualCardData={card} cardCount={cardCount} />
+      <Card
+        key={card.id}
+        individualCardData={card}
+        clickHandler={() => handleClick(card.id)}
+      />
     );
   });
 
