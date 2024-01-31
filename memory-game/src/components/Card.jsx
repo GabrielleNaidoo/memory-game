@@ -3,14 +3,20 @@ import cardBack from "../images/card-images/card-back.png";
 
 function Card(props) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [timerCompleted, setTimerCompleted] = useState(false);
+  const [cardCount, setCardCount] = useState(props.cardCount);
 
   function clickHandler() {
-    setIsFlipped((prev) => !prev);
+    if (timerCompleted && cardCount < 2) {
+      setIsFlipped((prev) => !prev);
+      setCardCount((prev) => prev + 1);
+    }
   }
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsFlipped(true);
+      setTimerCompleted(true);
     }, 10000);
 
     // Clear timeout if the component unmounts or if the card is flipped manually
@@ -20,7 +26,7 @@ function Card(props) {
   return (
     <div className="card_container">
       {!isFlipped && (
-        <div class="card_front">
+        <div className="card_front">
           <img
             className="card_image"
             src={props.individualCardData.image}

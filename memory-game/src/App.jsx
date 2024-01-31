@@ -8,6 +8,8 @@ import "./styles/App.css";
 function App() {
   const navigate = useNavigate();
   const [cards, setCards] = useState(cardData);
+  const [cardCount, setCardCount] = useState(0);
+  const [currentSet, setCurrentSet] = useState([]);
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -26,13 +28,15 @@ function App() {
     }
   }
 
-  const restartHandler = () => {
+  function restartHandler() {
     const shuffledCards = shuffleArray([...cards]);
     setCards(shuffledCards);
-  };
+  }
 
   const cardSet = cards.map((card) => {
-    return <Card key={card.id} individualCardData={card} />;
+    return (
+      <Card key={card.id} individualCardData={card} cardCount={cardCount} />
+    );
   });
 
   return (
