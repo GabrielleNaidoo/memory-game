@@ -1,8 +1,82 @@
 * {
-  color: blue;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
 }
 
-.player-avatar {
-  width: 10rem;
-  height: 7rem;
+body {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(62, 146, 206, 1)
+  );
+}
+
+/* Player Modal: */
+.title {
+  font-size: 3rem;
+  justify-self: center;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.form {
+  margin-top: 6rem;
+  display: flex;
+  gap: 5rem;
+  justify-content: center;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.player img {
+  width: 15rem;
+  height: 12rem;
+  margin: 0 auto;
+}
+
+.player input {
+  text-align: center;
+  font-size: 1rem;
+  color: black;
+  padding: 0.75rem 1.5rem;
+  margin: 2rem 0 4rem 0;
+  border-radius: 0.4rem;
+}
+
+/* #Buttons */
+.exit {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem 4rem;
+}
+
+.start {
+  display: flex;
+  justify-content: center;
+}
+
+.exit_btn,
+.start_btn {
+  padding: 0.7rem 1.4rem;
+  font-size: 1.2rem;
+  border-radius: 0.4rem;
+}
+
+.exit_btn {
+  background-color: #d4190c;
+}
+.start_btn {
+  background-color: #0ab169;
 }
