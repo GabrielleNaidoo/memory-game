@@ -80,3 +80,16 @@ body {
 .start_btn {
   background-color: #0ab169;
 }
+
+/* game */
+.game_container {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+.player_container {
+  justify-self: center;
+}
+
+.card_container {
+}
