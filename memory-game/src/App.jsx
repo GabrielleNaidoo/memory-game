@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, NavLink } from "react-router-dom";
+import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
 import cardData from "./data.js";
 import PlayerModal from "./components/PlayerModal";
 import Card from "./components/Card";
 import "./styles/App.css";
 
 function App() {
+  const navigate = useNavigate();
   const [cards, setCards] = useState(cardData);
 
   function shuffleArray(array) {
@@ -16,17 +17,22 @@ function App() {
     return array;
   }
 
+  function exitGameHandler() {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to exit the game?"
+    );
+    if (isConfirmed) {
+      navigate(-1);
+    }
+  }
+
   const restartHandler = () => {
     const shuffledCards = shuffleArray([...cards]);
     setCards(shuffledCards);
   };
 
   const cardSet = cards.map((card) => {
-    return (
-      <div className="card_container" key={card.id}>
-        <Card individualCardData={card} />
-      </div>
-    );
+    return <Card key={card.id} individualCardData={card} />;
   });
 
   return (
@@ -36,15 +42,25 @@ function App() {
         <Route
           path="/game"
           element={
-            <div className="game_container">
-              <div className="player_one player_container">
-                <h1>Player One</h1>
+            <div className="container">
+              <div className="button_container">
+                <button className="restart_btn button" onClick={restartHandler}>
+                  Restart game
+                </button>
+                <button className="exit_btn button" onClick={exitGameHandler}>
+                  Exit Game
+                </button>
               </div>
-              <div className="cards_container">{cardSet}</div>
-              <div className="player_two player_container">
-                <h1>Player Two</h1>
+              <h1 className="title">Memory</h1>
+              <div className="game">
+                <div className="player_one player_container">
+                  <div>Player One</div>
+                </div>
+                <div className="cards_container">{cardSet}</div>
+                <div className="player_two player_container">
+                  <div>Player Two</div>
+                </div>
               </div>
-              <button onClick={restartHandler}>Restart game</button>
             </div>
           }
         ></Route>

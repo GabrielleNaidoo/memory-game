@@ -38,7 +38,7 @@ function PlayerModal() {
     isOpen && (
       <div>
         <div className="exit">
-          <button className="exit_btn" onClick={exitGameHandler}>
+          <button className="exit_btn button" onClick={exitGameHandler}>
             Exit Game
           </button>
         </div>
@@ -72,7 +72,7 @@ function PlayerModal() {
           </div>
         </div>
         <div className="start">
-          <button className="start_btn" onClick={startGameHandler}>
+          <button className="start_btn button" onClick={startGameHandler}>
             Let's play!
           </button>
         </div>
