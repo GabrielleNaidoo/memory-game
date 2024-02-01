@@ -4,8 +4,10 @@ import CardContext from "../store/card-context.jsx";
 import PlayerModal from "./components/PlayerModal";
 import Card from "./components/Card";
 import PlayerCard from "./components/PlayerCard";
+import ScoreBoard from "./components/ScoreBoard";
 import playerOneImg from "./images/player-images/player-one.png";
 import playerTwoImg from "./images/player-images/player-two.png";
+import backgroundImage from "./images/end-background.png";
 
 import "./styles/App.css";
 
@@ -20,6 +22,14 @@ function App() {
     CardCtx.shuffleHandler();
   }, []);
 
+  function scoreNavigator() {
+    navigate("/score-board");
+  }
+  function handlePlayAgain() {
+    navigate("/");
+    CardCtx.restartGame();
+  }
+
   function restartHandler() {
     CardCtx.restartGame();
   }
@@ -29,8 +39,24 @@ function App() {
       "Are you sure you want to exit the game?"
     );
     if (isConfirmed) {
-      navigate(-1);
+      navigate("/");
     }
+  }
+
+  function RenderEndDisplay() {
+    return (
+      <div
+        className="end"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          border: "2px solid white",
+        }}
+      >
+        <h1 className="end_h1">It's a Match!</h1>
+      </div>
+    );
   }
 
   const cardSet = CardCtx.cardData.map((card) => {
@@ -52,9 +78,22 @@ function App() {
           element={
             <div className="container">
               <div className="button_container">
-                <button className="restart_btn button" onClick={restartHandler}>
-                  Restart game
-                </button>
+                {!CardCtx.endDisplay && (
+                  <button
+                    className="restart_btn button"
+                    onClick={restartHandler}
+                  >
+                    Restart game
+                  </button>
+                )}
+                {CardCtx.endDisplay && (
+                  <button
+                    className="restart_btn button"
+                    onClick={scoreNavigator}
+                  >
+                    Scores
+                  </button>
+                )}
                 <button className="exit_btn button" onClick={exitGameHandler}>
                   Exit Game
                 </button>
@@ -70,20 +109,12 @@ function App() {
                     number: 1,
                   }}
                 />
-                <div className="cards_container">
-                  {CardCtx.endDisplay ? (
-                    <div className="end">
-                      <h1>It's a Match!</h1>
-                      <h3>{`Winner: ${
-                        CardCtx.playerOneScore > CardCtx.playerTwoScore
-                          ? `Player One: ${CardCtx.playerOneScore}`
-                          : `Player Two: ${CardCtx.playerTwoScore}`
-                      }`}</h3>
-                    </div>
-                  ) : (
-                    cardSet
-                  )}
-                </div>
+
+                {CardCtx.endDisplay ? (
+                  <RenderEndDisplay />
+                ) : (
+                  <div className="cards_container">{cardSet}</div>
+                )}
                 <PlayerCard
                   playerDetails={{
                     playerName: playerTwo,
@@ -96,6 +127,10 @@ function App() {
               </div>
             </div>
           }
+        ></Route>
+        <Route
+          path="/score-board"
+          element={<ScoreBoard playAgainHandler={handlePlayAgain} />}
         ></Route>
       </Routes>
     </>

@@ -2,27 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import CardContext from "../../store/card-context";
 import cardBack from "../images/card-images/card-back.png";
 
-function Card(props) {
+function Card({ individualCardData, clickHandler }) {
   const CardCtx = useContext(CardContext);
 
   return (
     <div className="card_container">
-      {!props.individualCardData.flipped && (
+      {!individualCardData.flipped && (
         <div className="card_front">
           <img
             className="card_image"
-            src={props.individualCardData.image}
-            alt={`${props.individualCardData.value} of ${props.individualCardData.suit}`}
+            src={individualCardData.image}
+            alt={`${individualCardData.value} of ${individualCardData.suit}`}
           />
         </div>
       )}
-      {props.individualCardData.flipped && (
+      {individualCardData.flipped && (
         <div className="card_back">
           <img
             className="card_image"
             src={cardBack}
             alt={"Back of card"}
-            onClick={() => props.clickHandler(props.individualCardData.id)}
+            onClick={() => clickHandler(individualCardData.id)}
           />
         </div>
       )}
