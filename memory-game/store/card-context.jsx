@@ -39,8 +39,9 @@ export function CardContextProvider(props) {
 
   function restartGame() {
     shuffleHandler();
+    setCount(0);
     setCurrentSet([]);
-    setCurrentPlayer(1);
+    setCurrentPlayer(2);
     setPlayerOneScore(0);
     setPlayerTwoScore(0);
   }
