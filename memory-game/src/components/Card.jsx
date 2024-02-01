@@ -4,17 +4,6 @@ import cardBack from "../images/card-images/card-back.png";
 
 function Card(props) {
   const CardCtx = useContext(CardContext);
-  const [timerCompleted, setTimerCompleted] = useState(false);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      props.individualCardData.flipped = true;
-      setTimerCompleted(true);
-    }, 10000);
-
-    // Clear timeout if the component unmounts or if the card is flipped manually
-    return () => clearTimeout(timeoutId);
-  }, [props.individualCardData]);
 
   return (
     <div className="card_container">

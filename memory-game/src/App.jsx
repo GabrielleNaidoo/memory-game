@@ -10,13 +10,17 @@ function App() {
   const CardCtx = useContext(CardContext);
   const [cards, setCards] = useState(CardCtx.cardData);
 
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  function flipTimer() {
+    const timeoutId = setTimeout(() => {
+      setCards((prev) => prev.map((el) => ({ ...el, flipped: true })));
+    }, 10000);
+
+    return () => clearTimeout(timeoutId);
   }
+
+  useEffect(() => {
+    flipTimer();
+  }, [cards]);
 
   function exitGameHandler() {
     const isConfirmed = window.confirm(
@@ -27,17 +31,18 @@ function App() {
     }
   }
 
+  CardCtx.shuffleHandler(cards);
+
   function restartHandler() {
-    const shuffledCards = shuffleArray([...cards]);
+    const shuffledCards = CardCtx.shuffleHandler([...cards]);
     setCards(shuffledCards);
+    setCards((prev) => prev.map((el) => ({ ...el, flipped: false })));
+
+    flipTimer();
   }
 
   function handleClick(id) {
-    if (CardCtx.currentCount < 2) {
-      CardCtx.cardClickHandler(id);
-      const currentCard = cards.filter((card) => card.id === id)[0];
-      currentCard.flipped = false;
-    }
+    CardCtx.clickHandler(id);
   }
 
   useEffect(() => {
@@ -46,16 +51,18 @@ function App() {
       CardCtx.currentSet[0].color === CardCtx.currentSet[1].color &&
       CardCtx.currentSet[0].value === CardCtx.currentSet[1].value
     ) {
-      setCards((prev) =>
-        prev.filter(
-          (card) =>
-            card.id !== CardCtx.currentSet[0].id &&
-            card.id !== CardCtx.currentSet[1].id
-        )
-      );
+      const timeoutId = setTimeout(() => {
+        setCards((prev) =>
+          prev.filter(
+            (card) =>
+              card.id !== CardCtx.currentSet[0].id &&
+              card.id !== CardCtx.currentSet[1].id
+          )
+        );
+      }, 300);
+      return () => clearTimeout(timeoutId);
     }
-    console.log(CardCtx.currentSet);
-  }, [CardCtx.currentSet, cards]);
+  }, [CardCtx]);
 
   const cardSet = cards.map((card) => {
     return (
