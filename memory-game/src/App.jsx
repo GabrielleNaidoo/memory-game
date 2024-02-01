@@ -13,21 +13,16 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const CardCtx = useContext(CardContext);
-  const [cards, setCards] = useState(CardCtx.cardData);
-
   const { playerOne, playerTwo } = location.state?.playerNames || {};
 
-  function flipTimer() {
-    const timeoutId = setTimeout(() => {
-      setCards((prev) => prev.map((el) => ({ ...el, flipped: true })));
-    }, 10000);
-
-    return () => clearTimeout(timeoutId);
-  }
-
+  //First call
   useEffect(() => {
-    flipTimer();
-  }, [cards]);
+    CardCtx.shuffleHandler();
+  }, []);
+
+  function restartHandler() {
+    CardCtx.restartGame();
+  }
 
   function exitGameHandler() {
     const isConfirmed = window.confirm(
@@ -38,18 +33,14 @@ function App() {
     }
   }
 
-  CardCtx.shuffleHandler(cards);
-
-  function restartHandler() {
-    const shuffledCards = CardCtx.shuffleHandler([...cards]);
-    setCards(shuffledCards);
-    setCards((prev) => prev.map((el) => ({ ...el, flipped: false })));
-
-    flipTimer();
-  }
-
-  const cardSet = cards.map((card) => {
-    return <Card key={card.id} individualCardData={card} />;
+  const cardSet = CardCtx.cardData.map((card) => {
+    return (
+      <Card
+        key={card.id}
+        individualCardData={card}
+        clickHandler={CardCtx.clickHandler}
+      />
+    );
   });
 
   return (

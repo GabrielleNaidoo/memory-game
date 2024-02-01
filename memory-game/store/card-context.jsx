@@ -3,13 +3,14 @@ import cardData from "../src/data.js";
 
 const CardContext = createContext({
   cardData: [],
-  currentCount: null,
   currentSet: [],
   currentPlayer: null,
   playerOneScore: null,
   playerTwoScore: null,
-  // clickHandler: (id) => {},
-  shuffleHandlerHandler: () => {},
+  clickHandler: (id) => {},
+  shuffleHandler: () => {},
+  setCardData: (updatedData) => {},
+  restartGame: () => {},
 });
 
 export function CardContextProvider(props) {
@@ -20,37 +21,70 @@ export function CardContextProvider(props) {
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
 
-  // function clickHandler(id) {
-  //   const currentCardData = cardData.filter((card) => card.id === id)[0];
-  //   if (count < 2) {
-  //     setCurrentSet((prev) => [...prev, { ...currentCardData }]);
-  //     setCount((prev) => prev + 1);
-  //     cards.map((card) =>
-  //       card.id === id ? { ...card, flipped: false } : card
-  //     );
-  //   } else {
-  //     setCurrentSet((prev) => prev.splice(0, 2, { ...currentCardData }));
-  //     setCount(0);
-  //   }
-  // }
-
-  function shuffleHandler(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+  function shuffleHandler() {
+    const shuffledCards = [...cards];
+    for (let i = shuffledCards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [shuffledCards[i], shuffledCards[j]] = [
+        shuffledCards[j],
+        shuffledCards[i],
+      ];
     }
-    return array;
+    setCardData(shuffledCards.map((card) => ({ ...card, flipped: true })));
   }
+
+  function setCardData(updatedData) {
+    setCards(updatedData);
+  }
+
+  function restartGame() {
+    shuffleHandler();
+    setCurrentSet([]);
+    setCurrentPlayer(1);
+    setPlayerOneScore(0);
+    setPlayerTwoScore(0);
+  }
+
+  function clickHandler(id) {
+    const currentCardData = cards.find((card) => card.id === id);
+
+    if (count < 2) {
+      setCurrentSet((prev) => {
+        return [...prev, { ...currentCardData }];
+      });
+      setCards((prev) =>
+        prev.map((card) =>
+          card.id === id ? { ...card, flipped: false } : card
+        )
+      );
+      setCount((prev) => prev + 1);
+    }
+
+    // Add logic for checking matches and updating scores
+
+    // ...
+
+    // Check if the game is finished
+    if (cards.length === 0) {
+      // Handle game end logic
+    }
+  }
+  useEffect(() => {
+    console.log(count);
+    console.log(currentSet);
+  }, [count, currentSet]);
 
   const context = {
     cardData: cards,
-    currentCount: count,
     currentSet,
     currentPlayer,
     playerOneScore,
     playerTwoScore,
     // clickHandler,
     shuffleHandler,
+    setCardData,
+    restartGame,
+    clickHandler,
   };
 
   return (

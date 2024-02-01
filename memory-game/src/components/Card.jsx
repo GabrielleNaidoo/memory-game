@@ -22,7 +22,7 @@ function Card(props) {
             className="card_image"
             src={cardBack}
             alt={"Back of card"}
-            onClick={props.clickHandler}
+            onClick={() => props.clickHandler(props.individualCardData.id)}
           />
         </div>
       )}
