@@ -23,7 +23,7 @@ export function CardContextProvider(props) {
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
-  const [endDisplay, setEndDisplay] = useState(false);
+  const [endDisplay, setEndDisplay] = useState(true);
 
   function shuffleHandler() {
     const shuffledCards = [...cardData];
@@ -42,6 +42,7 @@ export function CardContextProvider(props) {
   }
 
   function restartGame() {
+    setEndDisplay(false);
     shuffleHandler();
     setCount(0);
     setFirstSet({});
@@ -64,7 +65,6 @@ export function CardContextProvider(props) {
         firstSet?.value === secondSet?.value &&
         firstSet?.color === secondSet?.color
       ) {
-        // setCards((prev) => prev.filter((card) => card.id !== id));
         setTimeout(() => {
           setCards((prev) =>
             prev.filter(
@@ -121,11 +121,6 @@ export function CardContextProvider(props) {
       setCount((prev) => prev + 1);
     }
   }
-
-  //temp:
-  useEffect(() => {
-    console.log(count, cards);
-  }, [count, cards]);
 
   const context = {
     cardData: cards,
