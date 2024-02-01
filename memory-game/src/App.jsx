@@ -76,6 +76,7 @@ function App() {
                     playerScore: CardCtx.playerOneScore,
                     title: "PLAYER ONE",
                     image: playerOneImg,
+                    number: 1,
                   }}
                 />
                 <div className="cards_container">{cardSet}</div>
@@ -85,6 +86,7 @@ function App() {
                     playerScore: CardCtx.playerTwoScore,
                     title: "PLAYER TWO",
                     image: playerTwoImg,
+                    number: 2,
                   }}
                 />
               </div>
