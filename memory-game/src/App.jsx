@@ -1,11 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import {
-  Route,
-  Routes,
-  NavLink,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import CardContext from "../store/card-context.jsx";
 import PlayerModal from "./components/PlayerModal";
 import Card from "./components/Card";
@@ -102,9 +96,21 @@ function App() {
               </div>
               <h1 className="title">Memory</h1>
               <div className="game">
-                <PlayerCard player={playerOne} />
+                <PlayerCard
+                  playerDetails={{
+                    playerName: playerOne,
+                    playerScore: CardCtx.playerOneScore,
+                    title: "Player one",
+                  }}
+                />
                 <div className="cards_container">{cardSet}</div>
-                <PlayerCard player={playerTwo} />
+                <PlayerCard
+                  playerDetails={{
+                    playerName: playerTwo,
+                    playerScore: CardCtx.playerTwoScore,
+                    title: "Player two",
+                  }}
+                />
               </div>
             </div>
           }
