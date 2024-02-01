@@ -1,5 +1,8 @@
 import React, { useContext } from "react";
 import CardContext from "../../store/card-context";
+import playerOneImage from "../images/player-images/player-one.png";
+import playerTwoImage from "../images/player-images/player-two.png";
+import scoreboardChap from "../images/player-images/scoreboard-chap.png";
 
 function ScoreBoard(props) {
   const CardCtx = useContext(CardContext);
@@ -15,24 +18,36 @@ function ScoreBoard(props) {
 
   return (
     <div className="scoreboard">
-      <p>Well done!</p>
+      <h1>Well done!</h1>
       <h1>{`Player ${winner}`}</h1>
-      <img></img>
-      <div>
-        <p>1st Place</p>
-        <p>{`Player ${winner}`}</p>
-        <p>{`Score: ${
+      <img src={scoreboardChap} alt="scoreboard image"></img>
+      <div className="scoreboard_box scoreboard_box_1">
+        <img
+          className="scoreboard_box_image"
+          src={winner === 1 ? playerOneImage : playerTwoImage}
+          alt="scoreboard image"
+        ></img>
+        <p className="scoreboard_box_place">1st Place</p>
+        <p className="scoreboard_box_player">{`Player ${winner}`}</p>
+        <p className="scoreboard_box_score">{`Score: ${
           winner === 1 ? CardCtx.playerOneScore : CardCtx.playerTwoScore
         }`}</p>
       </div>
-      <div>
-        {winner && <p>2nd Place</p>}
-        <p>{`Player ${loser}`}</p>
-        <p>{`Score: ${
+      <div className="scoreboard_box">
+        <img
+          className="scoreboard_box_image"
+          src={loser === 1 ? playerOneImage : playerTwoImage}
+          alt="scoreboard image"
+        ></img>
+        <p className="scoreboard_box_place">2nd Place</p>
+        <p className="scoreboard_box_player">{`Player ${loser}`}</p>
+        <p className="scoreboard_box_score">{`Score: ${
           loser === 1 ? CardCtx.playerOneScore : CardCtx.playerTwoScore
         }`}</p>
       </div>
-      <button onClick={props.playAgainHandler}>Play again</button>
+      <button className="button" onClick={props.playAgainHandler}>
+        Play again
+      </button>
     </div>
   );
 }
