@@ -1,14 +1,24 @@
 import { useState, useEffect, useContext } from "react";
-import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  NavLink,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import CardContext from "../store/card-context.jsx";
 import PlayerModal from "./components/PlayerModal";
 import Card from "./components/Card";
+import PlayerCard from "./components/PlayerCard";
 import "./styles/App.css";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const CardCtx = useContext(CardContext);
   const [cards, setCards] = useState(CardCtx.cardData);
+
+  const { playerOne, playerTwo } = location.state?.playerNames || {};
 
   function flipTimer() {
     const timeoutId = setTimeout(() => {
@@ -92,13 +102,9 @@ function App() {
               </div>
               <h1 className="title">Memory</h1>
               <div className="game">
-                <div className="player_one player_container">
-                  <div>Player One</div>
-                </div>
+                <PlayerCard player={playerOne} />
                 <div className="cards_container">{cardSet}</div>
-                <div className="player_two player_container">
-                  <div>Player Two</div>
-                </div>
+                <PlayerCard player={playerTwo} />
               </div>
             </div>
           }
