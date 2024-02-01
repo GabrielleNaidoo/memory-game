@@ -5,6 +5,7 @@ const CardContext = createContext({
   cardData: [],
   firstSet: {},
   secondSet: {},
+  matchedCards: [],
   currentPlayer: null,
   playerOneScore: null,
   playerTwoScore: null,
@@ -20,6 +21,7 @@ export function CardContextProvider(props) {
   const [count, setCount] = useState(0);
   const [firstSet, setFirstSet] = useState({});
   const [secondSet, setSecondSet] = useState({});
+  const [matchedCards, setMatchedCards] = useState([]);
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
@@ -43,6 +45,7 @@ export function CardContextProvider(props) {
 
   function restartGame() {
     setEndDisplay(false);
+    setMatchedCards([]);
     shuffleHandler();
     setCount(0);
     setFirstSet({});
@@ -66,11 +69,13 @@ export function CardContextProvider(props) {
         firstSet?.color === secondSet?.color
       ) {
         setTimeout(() => {
-          setCards((prev) =>
-            prev.filter(
-              (card) => card.id !== firstSet.id && card.id !== secondSet.id
-            )
-          );
+          setMatchedCards((prev) => [...prev, firstSet.id, secondSet.id]);
+          console.log(matchedCards.length);
+          // setCards((prev) =>
+          //   prev.filter(
+          //     (card) => card.id !== firstSet.id && card.id !== secondSet.id
+          //   )
+          // );
         }, 1500);
         currentPlayer === 1
           ? setPlayerOneScore((prev) => prev + 1)
@@ -90,21 +95,10 @@ export function CardContextProvider(props) {
       }
     }
 
-    if (cards.length === 0) {
+    if (matchedCards.length === 54) {
       setEndDisplay(true);
     }
-  }, [
-    cards.length,
-    count,
-    currentPlayer,
-    firstSet?.color,
-    firstSet.id,
-    firstSet?.value,
-    nextPlayer,
-    secondSet?.color,
-    secondSet.id,
-    secondSet?.value,
-  ]);
+  }, [count]);
 
   function clickHandler(id) {
     const currentCardData = cards.find((card) => card.id === id);
@@ -125,6 +119,8 @@ export function CardContextProvider(props) {
   const context = {
     cardData: cards,
     currentPlayer,
+    firstSet,
+    secondSet,
     playerOneScore,
     playerTwoScore,
     endDisplay,
@@ -132,6 +128,7 @@ export function CardContextProvider(props) {
     setCardData,
     restartGame,
     clickHandler,
+    matchedCards,
   };
 
   return (

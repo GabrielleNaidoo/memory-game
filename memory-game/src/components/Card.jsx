@@ -4,9 +4,15 @@ import cardBack from "../images/card-images/card-back.png";
 
 function Card({ individualCardData, clickHandler }) {
   const CardCtx = useContext(CardContext);
+  const isMatched = CardCtx.matchedCards.includes(individualCardData.id);
 
   return (
-    <div className="card_container">
+    <div
+      className="card_container"
+      style={{
+        visibility: isMatched ? "hidden" : "visible",
+      }}
+    >
       {!individualCardData.flipped && (
         <div className="card_front">
           <img
