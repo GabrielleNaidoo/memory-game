@@ -4,6 +4,9 @@ import CardContext from "../store/card-context.jsx";
 import PlayerModal from "./components/PlayerModal";
 import Card from "./components/Card";
 import PlayerCard from "./components/PlayerCard";
+import playerOneImg from "./images/player-images/player-one.png";
+import playerTwoImg from "./images/player-images/player-two.png";
+
 import "./styles/App.css";
 
 function App() {
@@ -45,37 +48,8 @@ function App() {
     flipTimer();
   }
 
-  function handleClick(id) {
-    CardCtx.clickHandler(id);
-  }
-
-  useEffect(() => {
-    if (
-      CardCtx.currentSet.length === 2 &&
-      CardCtx.currentSet[0].color === CardCtx.currentSet[1].color &&
-      CardCtx.currentSet[0].value === CardCtx.currentSet[1].value
-    ) {
-      const timeoutId = setTimeout(() => {
-        setCards((prev) =>
-          prev.filter(
-            (card) =>
-              card.id !== CardCtx.currentSet[0].id &&
-              card.id !== CardCtx.currentSet[1].id
-          )
-        );
-      }, 300);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [CardCtx]);
-
   const cardSet = cards.map((card) => {
-    return (
-      <Card
-        key={card.id}
-        individualCardData={card}
-        clickHandler={() => handleClick(card.id)}
-      />
-    );
+    return <Card key={card.id} individualCardData={card} />;
   });
 
   return (
@@ -100,7 +74,8 @@ function App() {
                   playerDetails={{
                     playerName: playerOne,
                     playerScore: CardCtx.playerOneScore,
-                    title: "Player one",
+                    title: "PLAYER ONE",
+                    image: playerOneImg,
                   }}
                 />
                 <div className="cards_container">{cardSet}</div>
@@ -108,7 +83,8 @@ function App() {
                   playerDetails={{
                     playerName: playerTwo,
                     playerScore: CardCtx.playerTwoScore,
-                    title: "Player two",
+                    title: "PLAYER TWO",
+                    image: playerTwoImg,
                   }}
                 />
               </div>

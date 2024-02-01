@@ -46,7 +46,11 @@ function PlayerModal() {
         <div className="subtitle">Are you ready to play?</div>
         <div className="form">
           <div className="playerOne player">
-            <img src={playerOneImage} alt="cartoon astronaut image" />
+            <img
+              className="player_img"
+              src={playerOneImage}
+              alt="cartoon astronaut image"
+            />
             <input
               placeholder="NAME OF PLAYER ONE"
               type="text"
@@ -57,6 +61,7 @@ function PlayerModal() {
           </div>
           <div className="playerTwo player">
             <img
+              className="player_img"
               src={playerTwoImage}
               alt="cartoon astronaut image"
               width="5rem"

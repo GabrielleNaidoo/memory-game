@@ -7,7 +7,7 @@ const CardContext = createContext({
   currentSet: [],
   playerOneScore: null,
   playerTwoScore: null,
-  clickHandler: (id) => {},
+  // clickHandler: (id) => {},
   shuffleHandlerHandler: () => {},
 });
 
@@ -19,19 +19,19 @@ export function CardContextProvider(props) {
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
 
-  function clickHandler(id) {
-    const currentCardData = cardData.filter((card) => card.id === id)[0];
-    if (count < 2) {
-      setCurrentSet((prev) => [...prev, { ...currentCardData }]);
-      setCount((prev) => prev + 1);
-      cards.map((card) =>
-        card.id === id ? { ...card, flipped: false } : card
-      );
-    } else {
-      setCurrentSet((prev) => prev.splice(0, 2, { ...currentCardData }));
-      setCount(0);
-    }
-  }
+  // function clickHandler(id) {
+  //   const currentCardData = cardData.filter((card) => card.id === id)[0];
+  //   if (count < 2) {
+  //     setCurrentSet((prev) => [...prev, { ...currentCardData }]);
+  //     setCount((prev) => prev + 1);
+  //     cards.map((card) =>
+  //       card.id === id ? { ...card, flipped: false } : card
+  //     );
+  //   } else {
+  //     setCurrentSet((prev) => prev.splice(0, 2, { ...currentCardData }));
+  //     setCount(0);
+  //   }
+  // }
 
   function shuffleHandler(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -47,7 +47,7 @@ export function CardContextProvider(props) {
     currentSet,
     playerOneScore,
     playerTwoScore,
-    clickHandler,
+    // clickHandler,
     shuffleHandler,
   };
 
