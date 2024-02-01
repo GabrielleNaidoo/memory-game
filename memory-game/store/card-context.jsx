@@ -26,7 +26,7 @@ export function CardContextProvider(props) {
   const [endDisplay, setEndDisplay] = useState(false);
 
   function shuffleHandler() {
-    const shuffledCards = [...cards];
+    const shuffledCards = [...cardData];
     for (let i = shuffledCards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledCards[i], shuffledCards[j]] = [
@@ -46,10 +46,65 @@ export function CardContextProvider(props) {
     setCount(0);
     setFirstSet({});
     setSecondSet({});
-    setCurrentPlayer(2);
+    setCurrentPlayer(1);
     setPlayerOneScore(0);
     setPlayerTwoScore(0);
   }
+
+  function nextPlayer() {
+    setCount(0);
+    setFirstSet({});
+    setSecondSet({});
+    currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
+  }
+
+  useEffect(() => {
+    if (count === 2) {
+      if (
+        firstSet?.value === secondSet?.value &&
+        firstSet?.color === secondSet?.color
+      ) {
+        // setCards((prev) => prev.filter((card) => card.id !== id));
+        setTimeout(() => {
+          setCards((prev) =>
+            prev.filter(
+              (card) => card.id !== firstSet.id && card.id !== secondSet.id
+            )
+          );
+        }, 1500);
+        currentPlayer === 1
+          ? setPlayerOneScore((prev) => prev + 1)
+          : setPlayerTwoScore((prev) => prev + 1);
+        nextPlayer();
+      } else {
+        setTimeout(() => {
+          setCards((prev) =>
+            prev.map((card) =>
+              card.id === firstSet.id || card.id === secondSet.id
+                ? { ...card, flipped: true }
+                : card
+            )
+          );
+          nextPlayer();
+        }, 1500);
+      }
+    }
+
+    if (cards.length === 0) {
+      setEndDisplay(true);
+    }
+  }, [
+    cards.length,
+    count,
+    currentPlayer,
+    firstSet?.color,
+    firstSet.id,
+    firstSet?.value,
+    nextPlayer,
+    secondSet?.color,
+    secondSet.id,
+    secondSet?.value,
+  ]);
 
   function clickHandler(id) {
     const currentCardData = cards.find((card) => card.id === id);
@@ -65,30 +120,12 @@ export function CardContextProvider(props) {
       );
       setCount((prev) => prev + 1);
     }
-
-    if (
-      count === 2 &&
-      firstSet?.value === secondSet?.value &&
-      firstSet?.color === secondSet?.color
-    ) {
-      currentPlayer === 1
-        ? setPlayerOneScore((prev) => prev + 1) && setCurrentPlayer(2)
-        : setPlayerTwoScore((prev) => prev + 1) && setCurrentPlayer(1);
-    }
-    if (
-      (count === 2 && firstSet?.value !== secondSet?.value) ||
-      firstSet?.color !== secondSet?.color
-    ) {
-      currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
-    }
-
-    if (cards.length === 0) {
-      setEndDisplay(true);
-    }
   }
+
+  //temp:
   useEffect(() => {
-    console.log(count);
-  }, [count]);
+    console.log(count, cards);
+  }, [count, cards]);
 
   const context = {
     cardData: cards,

@@ -71,7 +71,18 @@ function App() {
                   }}
                 />
                 <div className="cards_container">
-                  {CardCtx.endDisplay ? <h1>Done!</h1> : cardSet}
+                  {CardCtx.endDisplay ? (
+                    <div className="end">
+                      <h1>It's a Match!</h1>
+                      <h3>{`Winner: ${
+                        CardCtx.playerOneScore > CardCtx.playerTwoScore
+                          ? `Player One: ${CardCtx.playerOneScore}`
+                          : `Player Two: ${CardCtx.playerTwoScore}`
+                      }`}</h3>
+                    </div>
+                  ) : (
+                    cardSet
+                  )}
                 </div>
                 <PlayerCard
                   playerDetails={{
