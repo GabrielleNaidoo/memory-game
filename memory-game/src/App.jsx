@@ -43,6 +43,22 @@ function App() {
     }
   }
 
+  function RenderEndDisplay() {
+    return (
+      <div
+        className="end"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          border: "2px solid white",
+        }}
+      >
+        <h1 className="end_h1">It's a Match!</h1>
+      </div>
+    );
+  }
+
   const cardSet = CardCtx.cardData.map((card) => {
     return (
       <Card
@@ -95,17 +111,7 @@ function App() {
                 />
 
                 {CardCtx.endDisplay ? (
-                  <div
-                    className="end"
-                    style={{
-                      backgroundImage: `url(${backgroundImage})`,
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      border: "2px solid white",
-                    }}
-                  >
-                    <h1 className="end_h1">It's a Match!</h1>
-                  </div>
+                  <RenderEndDisplay />
                 ) : (
                   <div className="cards_container">{cardSet}</div>
                 )}

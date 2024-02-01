@@ -6,25 +6,26 @@
 }
 
 body {
-  background-color: rgba(62, 146, 206, 1);
+  background-color: #3e92ce;
   padding: 2rem 0.6rem;
 }
 
-/* REUSABLE CSS */
-
 /* Player Modal: */
+.title,
+.subtitle,
+.button {
+  font-weight: 700;
+}
+
 .title {
   font-size: 3rem;
-  font-weight: 700;
-  justify-self: center;
   text-align: center;
   margin-bottom: 2.5rem;
 }
 
 .subtitle {
-  text-align: center;
   font-size: 2rem;
-  font-weight: 700;
+  text-align: center;
 }
 
 .form {
@@ -49,7 +50,7 @@ body {
 .player input {
   text-align: center;
   font-size: 1rem;
-  color: black;
+  color: #000000;
   padding: 0.75rem 1.5rem;
   margin: 2rem 0 4rem 0;
   border-radius: 0.4rem;
@@ -70,9 +71,8 @@ body {
 .button {
   padding: 0.7rem 1.4rem;
   font-size: 1.2rem;
-  font-weight: 700;
   border-radius: 0.4rem;
-  border: 1px solid white;
+  border: 1px solid #ffffff;
 }
 
 .exit_btn {
@@ -97,16 +97,8 @@ body {
   gap: 1rem;
   margin: 2rem 0;
   padding: 2rem 4.5rem;
-  background: linear-gradient(
-      132.61deg,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0.1) 100%
-    ),
-    linear-gradient(
-      133.05deg,
-      rgba(255, 255, 255, 0.6) 0.62%,
-      rgba(255, 255, 255, 0.1) 102.4%
-    );
+  background: linear-gradient(132.61deg, #ffffff99 0%, #ffffff1a 100%),
+    linear-gradient(133.05deg, #ffffff99 0.62%, #ffffff1a 102.4%);
 }
 
 .player_card img {
@@ -116,7 +108,7 @@ body {
 }
 
 .name {
-  color: black;
+  color: #000000;
 }
 
 .turn_indicator {
@@ -150,16 +142,8 @@ body {
   border: 1px solid lightblue;
   padding: 1rem 2rem;
 
-  background: linear-gradient(
-      132.61deg,
-      rgba(255, 255, 255, 0.6) 0%,
-      rgba(255, 255, 255, 0.1) 100%
-    ),
-    linear-gradient(
-      133.05deg,
-      rgba(255, 255, 255, 0.6) 0.62%,
-      rgba(255, 255, 255, 0.1) 102.4%
-    );
+  background: linear-gradient(132.61deg, #ffffff99 0%, #ffffff1a 100%),
+    linear-gradient(133.05deg, #ffffff99 0.62%, #ffffff1a 102.4%);
 
   display: grid;
   grid-template-columns: repeat(9, 1fr);

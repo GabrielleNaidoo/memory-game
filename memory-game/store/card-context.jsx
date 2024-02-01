@@ -23,7 +23,7 @@ export function CardContextProvider(props) {
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
-  const [endDisplay, setEndDisplay] = useState(true);
+  const [endDisplay, setEndDisplay] = useState(false);
 
   function shuffleHandler() {
     const shuffledCards = [...cardData];
