@@ -3,10 +3,12 @@ import cardData from "../src/data.js";
 
 const CardContext = createContext({
   cardData: [],
-  currentSet: [],
+  firstSet: {},
+  secondSet: {},
   currentPlayer: null,
   playerOneScore: null,
   playerTwoScore: null,
+  endDisplay: false,
   clickHandler: (id) => {},
   shuffleHandler: () => {},
   setCardData: (updatedData) => {},
@@ -16,10 +18,12 @@ const CardContext = createContext({
 export function CardContextProvider(props) {
   const [cards, setCards] = useState(cardData);
   const [count, setCount] = useState(0);
-  const [currentSet, setCurrentSet] = useState([]);
+  const [firstSet, setFirstSet] = useState({});
+  const [secondSet, setSecondSet] = useState({});
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
+  const [endDisplay, setEndDisplay] = useState(false);
 
   function shuffleHandler() {
     const shuffledCards = [...cards];
@@ -40,7 +44,8 @@ export function CardContextProvider(props) {
   function restartGame() {
     shuffleHandler();
     setCount(0);
-    setCurrentSet([]);
+    setFirstSet({});
+    setSecondSet({});
     setCurrentPlayer(2);
     setPlayerOneScore(0);
     setPlayerTwoScore(0);
@@ -50,9 +55,9 @@ export function CardContextProvider(props) {
     const currentCardData = cards.find((card) => card.id === id);
 
     if (count < 2) {
-      setCurrentSet((prev) => {
-        return [...prev, { ...currentCardData }];
-      });
+      count === 1
+        ? setFirstSet({ ...currentCardData })
+        : setSecondSet({ ...currentCardData });
       setCards((prev) =>
         prev.map((card) =>
           card.id === id ? { ...card, flipped: false } : card
@@ -61,27 +66,36 @@ export function CardContextProvider(props) {
       setCount((prev) => prev + 1);
     }
 
-    // Add logic for checking matches and updating scores
+    if (
+      count === 2 &&
+      firstSet?.value === secondSet?.value &&
+      firstSet?.color === secondSet?.color
+    ) {
+      currentPlayer === 1
+        ? setPlayerOneScore((prev) => prev + 1) && setCurrentPlayer(2)
+        : setPlayerTwoScore((prev) => prev + 1) && setCurrentPlayer(1);
+    }
+    if (
+      (count === 2 && firstSet?.value !== secondSet?.value) ||
+      firstSet?.color !== secondSet?.color
+    ) {
+      currentPlayer === 1 ? setCurrentPlayer(2) : setCurrentPlayer(1);
+    }
 
-    // ...
-
-    // Check if the game is finished
     if (cards.length === 0) {
-      // Handle game end logic
+      setEndDisplay(true);
     }
   }
   useEffect(() => {
     console.log(count);
-    console.log(currentSet);
-  }, [count, currentSet]);
+  }, [count]);
 
   const context = {
     cardData: cards,
-    currentSet,
     currentPlayer,
     playerOneScore,
     playerTwoScore,
-    // clickHandler,
+    endDisplay,
     shuffleHandler,
     setCardData,
     restartGame,

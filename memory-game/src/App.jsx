@@ -70,7 +70,9 @@ function App() {
                     number: 1,
                   }}
                 />
-                <div className="cards_container">{cardSet}</div>
+                <div className="cards_container">
+                  {CardCtx.endDisplay ? <h1>Done!</h1> : cardSet}
+                </div>
                 <PlayerCard
                   playerDetails={{
                     playerName: playerTwo,
