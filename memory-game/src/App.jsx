@@ -10,6 +10,7 @@ import playerTwoImg from "./images/player-images/player-two.png";
 import backgroundImage from "./images/end-background.png";
 
 import "./styles/App.css";
+import "./styles/Media.css";
 
 function App() {
   const navigate = useNavigate();
@@ -43,22 +44,6 @@ function App() {
     }
   }
 
-  function RenderEndDisplay() {
-    return (
-      <div
-        className="end"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          border: "2px solid white",
-        }}
-      >
-        <h1 className="end_h1">It's a Match!</h1>
-      </div>
-    );
-  }
-
   const cardSet = CardCtx.cardData.map((card) => {
     return (
       <Card
@@ -76,7 +61,7 @@ function App() {
         <Route
           path="/game"
           element={
-            <div className="container">
+            <div>
               <div className="button_container">
                 {!CardCtx.endDisplay && (
                   <button
@@ -101,6 +86,7 @@ function App() {
               <h1 className="title">Memory</h1>
               <div className="game">
                 <PlayerCard
+                  className="player_one_card"
                   playerDetails={{
                     playerName: playerOne,
                     playerScore: CardCtx.playerOneScore,
@@ -109,13 +95,33 @@ function App() {
                     number: 1,
                   }}
                 />
-
-                {CardCtx.endDisplay ? (
-                  <RenderEndDisplay />
-                ) : (
-                  <div className="cards_container">{cardSet}</div>
-                )}
+                <div
+                  className="cards_container"
+                  style={
+                    CardCtx.endDisplay
+                      ? {
+                          backgroundImage: `url(${backgroundImage})`,
+                          backgroundSize: "cover",
+                          backgroundRepeat: "no-repeat",
+                          border: "2px solid white",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "80%",
+                        }
+                      : {}
+                  }
+                >
+                  {!CardCtx.endDisplay ? (
+                    cardSet
+                  ) : (
+                    <h1 className="cards_container_h1">It's a Match!</h1>
+                  )}
+                </div>
+                {/* )} */}
                 <PlayerCard
+                  className="player_two_card"
                   playerDetails={{
                     playerName: playerTwo,
                     playerScore: CardCtx.playerTwoScore,

@@ -8,9 +8,11 @@ function PlayerCard({ playerDetails }) {
     <div className="player_container">
       <div className="player_card">
         <img src={playerDetails.image} alt="Player image"></img>
-        <div>{playerDetails.title}</div>
+        <div className="player_card_title">{playerDetails.title}</div>
         <div className="name">{playerDetails.playerName}</div>
-        <div>SCORE: {playerDetails.playerScore}</div>
+        <div className="player_card_score">
+          SCORE: {playerDetails.playerScore}
+        </div>
       </div>
       {CardCtx.currentPlayer === playerDetails.number && (
         <div className="turn_indicator">It's your turn!</div>

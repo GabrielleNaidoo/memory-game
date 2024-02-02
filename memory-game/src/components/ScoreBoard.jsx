@@ -12,9 +12,13 @@ function ScoreBoard({ playAgainHandler }) {
 
   return (
     <div className="scoreboard">
-      <h1>Well done!</h1>
-      <h1>{`Player ${winner}`}</h1>
-      <img src={scoreboardChap} alt="scoreboard image"></img>
+      <h1 className="title">Well done!</h1>
+      <h1 className="subtitle">{`Player ${winner}`}</h1>
+      <img
+        className="scoreboard_image"
+        src={scoreboardChap}
+        alt="scoreboard image"
+      ></img>
       <div className="scoreboard_box scoreboard_box_1">
         <img
           className="scoreboard_box_image"

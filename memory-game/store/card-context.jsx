@@ -25,7 +25,7 @@ export function CardContextProvider(props) {
   const [currentPlayer, setCurrentPlayer] = useState(1);
   const [playerOneScore, setPlayerOneScore] = useState(0);
   const [playerTwoScore, setPlayerTwoScore] = useState(0);
-  const [endDisplay, setEndDisplay] = useState(false);
+  const [endDisplay, setEndDisplay] = useState(true);
 
   function shuffleHandler() {
     const shuffledCards = [...cardData];
@@ -70,7 +70,6 @@ export function CardContextProvider(props) {
       ) {
         setTimeout(() => {
           setMatchedCards((prev) => [...prev, firstSet.id, secondSet.id]);
-          console.log(matchedCards.length);
         }, 1500);
         currentPlayer === 1
           ? setPlayerOneScore((prev) => prev + 1)

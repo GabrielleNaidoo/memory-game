@@ -160,13 +160,8 @@ body {
 }
 
 /* End */
-.end {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.end_h1 {
+
+.cards_container_h1 {
   font-size: 3rem;
 }
 
@@ -203,10 +198,4 @@ body {
 .scoreboard_box_score {
   font-weight: 800;
   color: #0d4477;
-}
-
-.animate {
-  transform: rotateY(180deg);
-  transition: transform 1s ease;
-  transform-style: preserve-3d;
 }
