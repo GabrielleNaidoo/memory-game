@@ -84,10 +84,6 @@ export function CardContextProvider(props) {
                 ? {
                     ...card,
                     flipped: true,
-                    style: {
-                      transformX: "rotateY(180deg)",
-                      transition: "transform 1s ease",
-                    },
                   }
                 : card
             )
@@ -100,7 +96,18 @@ export function CardContextProvider(props) {
     if (matchedCards.length === 54) {
       setEndDisplay(true);
     }
-  }, [count]);
+  }, [
+    count,
+    currentPlayer,
+    firstSet?.color,
+    firstSet.id,
+    firstSet?.value,
+    matchedCards.length,
+    nextPlayer,
+    secondSet?.color,
+    secondSet.id,
+    secondSet?.value,
+  ]);
 
   function clickHandler(id) {
     const currentCardData = cards.find((card) => card.id === id);
@@ -115,10 +122,6 @@ export function CardContextProvider(props) {
             ? {
                 ...card,
                 flipped: false,
-                style: {
-                  transform: "rotateY(180deg)",
-                  transition: "transform 1s ease",
-                },
               }
             : card
         )

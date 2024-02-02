@@ -8,25 +8,27 @@ function Card({ individualCardData, clickHandler }) {
   const [rotationStyle, setRotationStyle] = useState({});
 
   useEffect(() => {
-    if (individualCardData.style) {
-      setRotationStyle(individualCardData.style);
+    if (!individualCardData.flipped) {
+      setRotationStyle({
+        transform: "rotateY(180deg)",
+        transition: "transform 1s ease",
+        transformStyle: "preserve-3d",
+      });
     } else {
       setRotationStyle({});
     }
-  }, [individualCardData.style]);
+  }, [individualCardData.flipped]);
 
   return (
     <div
       className="card_container"
       style={{
         visibility: isMatched ? "hidden" : "visible",
+        ...rotationStyle,
       }}
     >
       {!individualCardData.flipped && (
-        <div
-          className="card_front"
-          style={{ ...rotationStyle, transformStyle: "preserve-3d" }}
-        >
+        <div className="card_front">
           <img
             className="card_image"
             src={individualCardData.image}
@@ -35,10 +37,7 @@ function Card({ individualCardData, clickHandler }) {
         </div>
       )}
       {individualCardData.flipped && (
-        <div
-          className="card_back"
-          style={{ ...rotationStyle, transformStyle: "preserve-3d" }}
-        >
+        <div className="card_back">
           <img
             className="card_image"
             src={cardBack}
