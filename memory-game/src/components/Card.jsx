@@ -5,6 +5,15 @@ import cardBack from "../images/card-images/card-back.png";
 function Card({ individualCardData, clickHandler }) {
   const CardCtx = useContext(CardContext);
   const isMatched = CardCtx.matchedCards.includes(individualCardData.id);
+  const [rotationStyle, setRotationStyle] = useState({});
+
+  useEffect(() => {
+    if (individualCardData.style) {
+      setRotationStyle(individualCardData.style);
+    } else {
+      setRotationStyle({});
+    }
+  }, [individualCardData.style]);
 
   return (
     <div
@@ -14,7 +23,10 @@ function Card({ individualCardData, clickHandler }) {
       }}
     >
       {!individualCardData.flipped && (
-        <div className="card_front">
+        <div
+          className="card_front"
+          style={{ ...rotationStyle, transformStyle: "preserve-3d" }}
+        >
           <img
             className="card_image"
             src={individualCardData.image}
@@ -23,7 +35,10 @@ function Card({ individualCardData, clickHandler }) {
         </div>
       )}
       {individualCardData.flipped && (
-        <div className="card_back">
+        <div
+          className="card_back"
+          style={{ ...rotationStyle, transformStyle: "preserve-3d" }}
+        >
           <img
             className="card_image"
             src={cardBack}

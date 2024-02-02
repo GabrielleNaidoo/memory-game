@@ -71,11 +71,6 @@ export function CardContextProvider(props) {
         setTimeout(() => {
           setMatchedCards((prev) => [...prev, firstSet.id, secondSet.id]);
           console.log(matchedCards.length);
-          // setCards((prev) =>
-          //   prev.filter(
-          //     (card) => card.id !== firstSet.id && card.id !== secondSet.id
-          //   )
-          // );
         }, 1500);
         currentPlayer === 1
           ? setPlayerOneScore((prev) => prev + 1)
@@ -86,7 +81,14 @@ export function CardContextProvider(props) {
           setCards((prev) =>
             prev.map((card) =>
               card.id === firstSet.id || card.id === secondSet.id
-                ? { ...card, flipped: true }
+                ? {
+                    ...card,
+                    flipped: true,
+                    style: {
+                      transformX: "rotateY(180deg)",
+                      transition: "transform 1s ease",
+                    },
+                  }
                 : card
             )
           );
@@ -109,7 +111,16 @@ export function CardContextProvider(props) {
         : setSecondSet({ ...currentCardData });
       setCards((prev) =>
         prev.map((card) =>
-          card.id === id ? { ...card, flipped: false } : card
+          card.id === id
+            ? {
+                ...card,
+                flipped: false,
+                style: {
+                  transform: "rotateY(180deg)",
+                  transition: "transform 1s ease",
+                },
+              }
+            : card
         )
       );
       setCount((prev) => prev + 1);
