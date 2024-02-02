@@ -2,6 +2,8 @@
 # Memory Card Game
 Welcome to the Memory Card Game! This React-based web application allows users to play the classic memory card matching game.
 
+[Deployed version](https://memorygameonline.netlify.app/)
+
 ## Table of Contents
 - [Features](#features)
 - [Prerequisites](#prerequisites)
