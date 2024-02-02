@@ -6,6 +6,15 @@ function Card({ individualCardData, clickHandler }) {
   const CardCtx = useContext(CardContext);
   const isMatched = CardCtx.matchedCards.includes(individualCardData.id);
   const [rotationStyle, setRotationStyle] = useState({});
+  const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+    const image = new Image();
+    image.src = individualCardData.image;
+    image.onload = () => {
+      setImageSrc(image.src);
+    };
+  }, [individualCardData.image]);
 
   useEffect(() => {
     if (!individualCardData.flipped) {
@@ -31,7 +40,7 @@ function Card({ individualCardData, clickHandler }) {
         <div className="card_front">
           <img
             className="card_image"
-            src={individualCardData.image}
+            src={imageSrc}
             alt={`${individualCardData.value} of ${individualCardData.suit}`}
           />
         </div>
@@ -50,4 +59,8 @@ function Card({ individualCardData, clickHandler }) {
   );
 }
 
-export default Card;
+const MemoizedCard = React.memo(Card);
+
+export default MemoizedCard;
+
+// export default Card;
