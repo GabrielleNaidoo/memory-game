@@ -14,9 +14,10 @@ function PlayerCard({ playerDetails }) {
           SCORE: {playerDetails.playerScore}
         </div>
       </div>
-      {CardCtx.currentPlayer === playerDetails.number && (
-        <div className="turn_indicator">It's your turn!</div>
-      )}
+      {CardCtx.currentPlayer === playerDetails.number &&
+        CardCtx.matchedCards.length !== 54 && (
+          <div className="turn_indicator">It's your turn!</div>
+        )}
     </div>
   );
 }
