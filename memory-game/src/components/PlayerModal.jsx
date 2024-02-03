@@ -30,7 +30,7 @@ function PlayerModal() {
       "Are you sure you want to exit the game?"
     );
     if (isConfirmed) {
-      window.close();
+      window.close() || alert("Please close site manually");
     }
   }
 
